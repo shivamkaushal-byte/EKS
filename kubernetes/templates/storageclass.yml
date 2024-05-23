@@ -1,0 +1,10 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata: 
+    name: efs-storage-class
+provisioner: efs.csi.aws.com
+parameters:
+   tier: standard
+   network: vpc-09804f04419cf9000
+
+ 

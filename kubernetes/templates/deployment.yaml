@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+   name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+     matchLabels:
+        {{- .Values.labels | toYaml | nindent 8 }}
+  template:
+     metadata:
+       labels:
+         {{- .Values.labels | toYaml | nindent 10 }}
+     spec:
+        serviceAccountName: efs-access 
+        containers:
+          - name: nginx-server
+            image: nginx:latest
+            ports:
+              - containerPort: 80
+            volumeMounts:
+                - name: nginx-persistent-storage
+                  mountPath: /usr/share/nginx/html
+            resources:
+              requests:
+                 cpu: "1"
+                 memory: "1Gi"
+              limits:
+                 cpu: "2"    
+                 memory: "2Gi"
+        volumes:
+         - name: nginx-persistent-storage
+           persistentVolumeClaim:
+              claimName: nginx-pvc-new

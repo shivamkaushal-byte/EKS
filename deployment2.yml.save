@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name : apache-deployment
+spec:
+  replicas: 2
+  selector:
+     matchlabels:
+         app: apache
+  template:
+     metadata:
+       labels:
+         app: apache
+     spec:
+       serviceAccountName: efs-access
+       containers: 
+         - name: apache
+           image: httpd
+           ports: 
+             - containerPort: 8080
+           volumeMounts:
+                - name: nginx-persistent-storage
+                  mountPath: /var/www/html
+      volumes:
+         - name: apache-persistent-storage
+           persistentVolumeClaim:
+              claimName: apache-pvc 

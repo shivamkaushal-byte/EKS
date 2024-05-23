@@ -1,0 +1,19 @@
+{
+	"Version": "2012-10-17",
+	"Statement": [{
+		"Effect": "Allow",
+		"Action": [
+			"logs:CreateLogStream",
+			"logs:CreateLogGroup",
+			"logs:DescribeLogStreams",
+			"logs:PutLogEvents",
+                        "logs:PutRetentionPolicy",
+                        "elasticfilesystem:DescribeFileSystems",
+                        "elasticfilesystem:CreateReplicationConfiguration",
+                        "elasticfilesystem:DescribeReplicationConfigurations",
+                        "elasticfilesystem:DeleteReplicationConfiguration",
+                        "kms:*"
+		],
+		"Resource": "*"
+	}]
+}

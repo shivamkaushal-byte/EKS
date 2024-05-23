@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+   name: nginx-deployment
+spec:
+  replicas: 2
+  selector:
+     matchLabels:
+        app: nginx
+  template:
+     metadata:
+       labels:
+         app: nginx
+     spec:
+        serviceAccountName: efs-access 
+        containers:
+          - name: nginx-server
+            image: nginx:latest
+            ports:
+              - containerPort: 8080
+            volumeMounts:
+                - name: nginx-persistent-storage
+                  mountPath: /usr/share/nginx/html
+                - name: secrets-store
+                  mountPath: /usr/secrets
+            envFrom:
+               - configMapRef:
+                    name: database-config 
+        volumes:
+         - name: nginx-persistent-storage
+           persistentVolumeClaim:
+              claimName: nginx-pvc-new
+         - name: secrets
+             secret:
+               secretName: db-secret

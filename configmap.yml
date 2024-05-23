@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata: 
+  name: database-config
+data:
+  database-url: "demo"
+  database-name: "mysql"
+

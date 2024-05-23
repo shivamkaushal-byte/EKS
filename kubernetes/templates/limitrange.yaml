@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: LimitRange
+metadata: 
+    name: nginx-pods
+spec:
+  limits:
+  - type: Pod
+    max: 
+      cpu: "2"
+      memory: "2Gi"
+    min:
+      cpu: "512m"
+      memory: "100Mi"
+    selector:
+       matchLabels:
+          app: nginx
+
